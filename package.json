@@ -1,0 +1,16 @@
+{
+  "name": "enzotasca-it",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace web",
+    "build": "npm run build --workspace web",
+    "lint": "npm run lint --workspace web"
+  },
+  "engines": {
+    "node": ">=20.9.0"
+  }
+}
