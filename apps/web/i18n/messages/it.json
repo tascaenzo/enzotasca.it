@@ -82,8 +82,7 @@
   "articles": {
     "asideTitle": "Articolo",
     "asideDescription": "Qui potrai aggiungere indice, link al video YouTube collegato, repository o materiali del progetto.",
-    "backLink": "Torna agli articoli",
-    "mockNote": "Questa pagina usa ancora contenuti mockati: la struttura e gia pronta per ricevere testo completo, sezioni, immagini e dati reali da API o CMS."
+    "backLink": "Torna agli articoli"
   },
   "cookie": {
     "bannerTitle": "Preferenze cookie",

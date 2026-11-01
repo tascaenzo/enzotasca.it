@@ -1,18 +1,16 @@
 "use client";
 
-import { useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Container } from "@/components/ui/container";
-import { Section } from "@/components/ui/section";
-import { Eyebrow } from "@/components/ui/typography";
+import { Container, Eyebrow, Section } from "@enzotasca/ui";
 import { useTranslations } from "next-intl";
+import { useEffect } from "react";
+import { Button } from "@/components/navigation/button";
 
 type ErrorPageProps = {
   error: Error & { digest?: string };
   reset: () => void;
 };
 
-export default function Error({ error, reset }: ErrorPageProps) {
+export default function ErrorPage({ error, reset }: ErrorPageProps) {
   const t = useTranslations("errors");
 
   useEffect(() => {

@@ -1,7 +1,7 @@
+import { PageHeader } from "@enzotasca/ui";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { Button } from "@/components/ui/button";
-import { PageHeader } from "@/components/ui/page-header";
+import { Button } from "@/components/navigation/button";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("cookie");
@@ -19,7 +19,10 @@ export default async function CookiePolicyPage() {
 
   return (
     <main id="main-content" className="bg-ds-white">
-      <PageHeader eyebrow={t("cookiePolicyTitle")} title={t("cookiePolicyTitle") + "."}>
+      <PageHeader
+        eyebrow={t("cookiePolicyTitle")}
+        title={`${t("cookiePolicyTitle")}.`}
+      >
         <div className="mt-8 space-y-6 text-body-lg text-ds-warm-muted">
           <p>{t("cookiePolicyText1")}</p>
           <p>{t("cookiePolicyText2")}</p>

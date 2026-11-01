@@ -1,6 +1,6 @@
+import { cn } from "@enzotasca/ui";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
-import { cn } from "@/lib/cn";
 import type { Project } from "@/types/content";
 
 type ProjectCardProps = {
@@ -19,7 +19,12 @@ export function ProjectCard({ index, project }: ProjectCardProps) {
   return (
     <article aria-labelledby={titleId} className="flex flex-col gap-4">
       {isExternal ? (
-        <a className={cardClassName} href={project.href} rel="noreferrer" target="_blank">
+        <a
+          className={cardClassName}
+          href={project.href}
+          rel="noreferrer"
+          target="_blank"
+        >
           <div className="relative aspect-[16/10] bg-ds-ink">
             <Image
               alt={project.imageAlt}
@@ -36,7 +41,10 @@ export function ProjectCard({ index, project }: ProjectCardProps) {
                   {String(index + 1).padStart(2, "0")} /{" "}
                   {project.status === "in-progress" ? "In corso" : "Pubblicato"}
                 </p>
-                <h3 className="max-w-md text-title-md text-ds-white" id={titleId}>
+                <h3
+                  className="max-w-md text-title-md text-ds-white"
+                  id={titleId}
+                >
                   {project.title}
                 </h3>
                 {project.date ? (
@@ -75,7 +83,10 @@ export function ProjectCard({ index, project }: ProjectCardProps) {
                   {String(index + 1).padStart(2, "0")} /{" "}
                   {project.status === "in-progress" ? "In corso" : "Pubblicato"}
                 </p>
-                <h3 className="max-w-md text-title-md text-ds-white" id={titleId}>
+                <h3
+                  className="max-w-md text-title-md text-ds-white"
+                  id={titleId}
+                >
                   {project.title}
                 </h3>
                 {project.date ? (

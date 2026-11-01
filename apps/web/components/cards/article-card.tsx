@@ -1,6 +1,6 @@
+import { cn } from "@enzotasca/ui";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
-import { cn } from "@/lib/cn";
 import type { Article } from "@/types/content";
 
 type ArticleCardProps = Article;
@@ -26,7 +26,12 @@ export function ArticleCard({
   return (
     <article aria-labelledby={titleId} className="min-h-105">
       {isExternal ? (
-        <a className={cardClassName} href={href} rel="noreferrer" target="_blank">
+        <a
+          className={cardClassName}
+          href={href}
+          rel="noreferrer"
+          target="_blank"
+        >
           {image ? (
             <div className="relative aspect-16/10 overflow-hidden bg-ds-surface">
               <Image
@@ -43,7 +48,12 @@ export function ArticleCard({
           ) : null}
           <div className="flex flex-1 flex-col justify-between p-8">
             <div className="flex flex-col gap-4">
-              <div className={cn("flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-mono-sm uppercase", accent ? "text-ds-green-ink" : "text-ds-blue")}>
+              <div
+                className={cn(
+                  "flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-mono-sm uppercase",
+                  accent ? "text-ds-green-ink" : "text-ds-blue",
+                )}
+              >
                 <p>{tag}</p>
                 {date ? <time dateTime={publishedAt}>{date}</time> : null}
               </div>
@@ -72,7 +82,12 @@ export function ArticleCard({
           ) : null}
           <div className="flex flex-1 flex-col justify-between p-8">
             <div className="flex flex-col gap-4">
-              <div className={cn("flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-mono-sm uppercase", accent ? "text-ds-green-ink" : "text-ds-blue")}>
+              <div
+                className={cn(
+                  "flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-mono-sm uppercase",
+                  accent ? "text-ds-green-ink" : "text-ds-blue",
+                )}
+              >
                 <p>{tag}</p>
                 {date ? <time dateTime={publishedAt}>{date}</time> : null}
               </div>

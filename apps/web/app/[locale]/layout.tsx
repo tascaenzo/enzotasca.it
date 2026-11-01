@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-import { notFound } from "next/navigation";
 import { CookieBanner } from "@/components/cookie/cookie-banner";
 import { SiteFooter } from "@/components/site/site-footer";
 import { SiteHeader } from "@/components/site/site-header";
@@ -85,7 +85,12 @@ export default async function LocaleLayout({
             Vai al contenuto principale
           </a>
           <SiteHeader />
-          <div className="flex-1" id="main-wrapper" tabIndex={-1} style={{ outline: "none" }}>
+          <div
+            className="flex-1"
+            id="main-wrapper"
+            tabIndex={-1}
+            style={{ outline: "none" }}
+          >
             {children}
           </div>
           <SiteFooter />

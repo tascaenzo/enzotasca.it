@@ -11,3 +11,12 @@ build
 .vscode
 coverage
 .turbo
+
+# TypeScript incremental compilation cache
+*.tsbuildinfo
+
+# Local SQLite data and sidecars
+data/
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal

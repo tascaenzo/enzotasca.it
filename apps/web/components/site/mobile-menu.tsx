@@ -1,8 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Button } from "@/components/navigation/button";
 import { Link } from "@/i18n/routing";
 
 type NavItem = {
@@ -45,7 +45,8 @@ export function MobileMenu({ navItems }: MobileMenuProps) {
 
   useEffect(() => {
     if (isMenuOpen) {
-      const firstFocusable = menuRef.current?.querySelector<HTMLElement>(focusableSelector);
+      const firstFocusable =
+        menuRef.current?.querySelector<HTMLElement>(focusableSelector);
       requestAnimationFrame(() => firstFocusable?.focus());
     } else {
       hamburgerRef.current?.focus();
@@ -55,7 +56,8 @@ export function MobileMenu({ navItems }: MobileMenuProps) {
   const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (e.key !== "Tab" || !menuRef.current) return;
 
-    const focusableElements = menuRef.current.querySelectorAll<HTMLElement>(focusableSelector);
+    const focusableElements =
+      menuRef.current.querySelectorAll<HTMLElement>(focusableSelector);
     if (focusableElements.length === 0) return;
 
     const first = focusableElements[0];
@@ -121,7 +123,7 @@ export function MobileMenu({ navItems }: MobileMenuProps) {
           .join(" ")}
         id="mobile-menu"
         onKeyDown={handleKeyDown}
-        role={isMenuOpen ? "dialog" : undefined}
+        role="dialog"
         aria-modal={isMenuOpen ? true : undefined}
       >
         <div className="flex min-h-screen flex-col px-6 py-6">

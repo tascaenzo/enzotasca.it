@@ -82,8 +82,7 @@
   "articles": {
     "asideTitle": "Artikel",
     "asideDescription": "Hier kannst du ein Inhaltsverzeichnis, Links zum zugehörigen YouTube-Video, Repository oder Projektmaterialien hinzufügen.",
-    "backLink": "Zurück zu den Artikeln",
-    "mockNote": "Diese Seite verwendet noch Platzhalter-Inhalte: Die Struktur ist bereits bereit für vollständige Texte, Abschnitte, Bilder und echte Daten aus API oder CMS."
+    "backLink": "Zurück zu den Artikeln"
   },
   "cookie": {
     "bannerTitle": "Cookie-Einstellungen",

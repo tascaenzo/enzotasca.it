@@ -24,9 +24,7 @@ export function LocaleSwitcher() {
           ) : (
             <Link
               aria-label={t("switchToLang", {
-                lang: t(
-                  `lang${code.charAt(0).toUpperCase()}${code.slice(1)}`,
-                ),
+                lang: t(`lang${code.charAt(0).toUpperCase()}${code.slice(1)}`),
               })}
               className="inline-flex h-8 w-8 items-center justify-center rounded-ds-md font-mono text-mono-sm text-ds-muted-strong transition-colors hover:bg-ds-surface hover:text-ds-ink focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-ds-blue"
               href={pathname}

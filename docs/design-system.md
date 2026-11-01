@@ -1,6 +1,7 @@
 # Design system
 
-Fonte di verita: Tailwind CSS v4 `@theme` in `apps/web/app/globals.css`.
+Fonte di verita: Tailwind CSS v4 `@theme` in `packages/ui/src/styles.css`.
+I componenti riutilizzabili sono nel workspace `@enzotasca/ui`; configurazione e utilizzo in `packages/ui/README.md`.
 I componenti usano esclusivamente classi Tailwind basate sui token `ds-*`.
 Non esiste una copia TypeScript parallela dei token se non per le eventuali necessita runtime.
 
@@ -88,58 +89,58 @@ Famiglie: `Inter` (sans), `Liberation Mono` (mono).
 
 ## Componenti
 
-### `Button` (`components/ui/button.tsx`)
-- Polymorfico: `<button>` o `<Link>` (Next.js) se riceve `href`
+### `Button` (`packages/ui/src/components/button.tsx`)
+- Polymorfico: `<button>` oppure `<a>` se riceve `href`; `linkComponent` permette di usare un router fornito dall'app. Gli adattatori Next.js sono sotto `apps/web/components/navigation/`.
 - Varianti: `primary`, `secondary`, `accent`, `ghost`, `outline`, `outlineInverse`
 - Dimensioni: `md` (48px), `lg` (60px)
 - Accessibilita: `type="button"` di default, focus ring visibile, stato `disabled`
 - Transizione: background, colore, bordo e transform con hover translateY(-2px)
 
-### `Container` (`components/ui/container.tsx`)
+### `Container` (`packages/ui/src/components/container.tsx`)
 - Larghezza massima `1216px` (`max-w-site`)
 - Gutter responsive `px-6 md:px-8`
 - Accetta className per personalizzazione
 
-### `Section` (`components/ui/section.tsx`)
+### `Section` (`packages/ui/src/components/section.tsx`)
 - Padding verticale `py-20 md:py-32`
 - Wrapper semantico `<section>`
 
-### `Card` (`components/ui/card.tsx`)
+### `Card` (`packages/ui/src/components/card.tsx`)
 - Elemento configurabile: `article` (default), `div`, `section`
 - Background default `bg-ds-surface`, padding default `p-8`
 - `focus-within` ring su ds-blue
 - Raggio `rounded-ds-lg`
 
-### `Eyebrow` / `Heading` (`components/ui/typography.tsx`)
+### `Eyebrow` / `Heading` (`packages/ui/src/components/typography.tsx`)
 - Helper tipografici con heading level configurabile (`as` prop)
 - `Eyebrow`: font mono uppercase, tracking wide, colore warm-muted
 - `Heading`: font sans, `text-headline-md`, colore ink
 
-### `SectionHeader` (`components/ui/section-header.tsx`)
+### `SectionHeader` (`packages/ui/src/components/section-header.tsx`)
 - Combina `Eyebrow` + `Heading` nel pattern standard delle sezioni
 - Props: `eyebrow`, `title`, `id`, `as` (heading level), `eyebrowClassName`, `titleClassName`, `className`, `children`
 
-### `PageHeader` (`components/ui/page-header.tsx`)
+### `PageHeader` (`packages/ui/src/components/page-header.tsx`)
 - Wrapper completo per intestazione pagine contenuto (cookie policy, preferenze, newsletter)
 - Include `Section` + `Container` + `Eyebrow` + `<h1>`
 - Props: `eyebrow`, `title`, `className`, `containerClassName`, `children`
 
-### `TextField` (`components/ui/text-field.tsx`)
+### `TextField` (`packages/ui/src/components/text-field.tsx`)
 - Input testuale con label obbligatoria
 - Auto-generazione `id` via `useId()`
 - Placeholder, hover, focus, invalid e disabled state
 
-### `CheckboxField` (`components/ui/checkbox-field.tsx`)
+### `CheckboxField` (`packages/ui/src/components/checkbox-field.tsx`)
 - Checkbox con label e description opzionale
 - Auto-generazione `id` via `useId()`
 
-### `TextLink` (`components/ui/text-link.tsx`)
+### `TextLink` (`packages/ui/src/components/text-link.tsx`)
 - Link testuale inline con varianti di tono e sottolineatura
 - Toni: `muted`, `ink`, `blue`, `inverse`, `mint`
 - Sottolineatura: `always`, `hover`, `none`, `subtle`, `thick`
 - Link esterni: `noreferrer` + `_blank` di default
 
-### `Tag` / `TagList` (`components/ui/tag.tsx`)
+### `Tag` / `TagList` (`packages/ui/src/components/tag.tsx`)
 - Badge semantici per skill e tecnologie
 - Varianti: `default`, `mint`
 
@@ -204,5 +205,5 @@ JSON-LD integrato nelle pagine:
 - Stile editoriale: tanto whitespace, bordi minimi, tipografia forte
 - Card solo per contenuti ripetuti (skill, progetti, articoli)
 - Il sistema e monocromatico con accenti blu/verdi/mint
-- Per classi condizionali: usare `cn()` in `lib/cn.ts`
+- Per classi condizionali: usare `cn()` esportata da `@enzotasca/ui`
 - Non usare `dangerouslySetInnerHTML` se non per JSON-LD strutturato

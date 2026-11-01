@@ -82,8 +82,7 @@
   "articles": {
     "asideTitle": "Article",
     "asideDescription": "Here you'll be able to add a table of contents, a link to the related YouTube video, repository, or project materials.",
-    "backLink": "Back to articles",
-    "mockNote": "This page still uses mock content: the structure is ready to receive full text, sections, images, and real data from an API or CMS."
+    "backLink": "Back to articles"
   },
   "cookie": {
     "bannerTitle": "Cookie preferences",

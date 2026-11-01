@@ -1,17 +1,17 @@
 "use client";
 
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { CheckboxField } from "@enzotasca/ui";
 import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
-import { CheckboxField } from "@/components/ui/checkbox-field";
-import { TextLink } from "@/components/ui/text-link";
+import { useEffect, useState, useSyncExternalStore } from "react";
+import { Button } from "@/components/navigation/button";
+import { TextLink } from "@/components/navigation/text-link";
 import {
   COOKIE_CONSENT_EMPTY_SNAPSHOT,
   COOKIE_PREFERENCES_OPEN_EVENT,
   createCookieConsent,
-  readCookieConsent,
   getCookieConsentServerSnapshot,
   getCookieConsentSnapshot,
+  readCookieConsent,
   subscribeCookieConsent,
   writeCookieConsent,
 } from "@/lib/cookies/consent";
@@ -54,7 +54,10 @@ export function CookieBanner() {
     window.addEventListener(COOKIE_PREFERENCES_OPEN_EVENT, openPreferences);
 
     return () => {
-      window.removeEventListener(COOKIE_PREFERENCES_OPEN_EVENT, openPreferences);
+      window.removeEventListener(
+        COOKIE_PREFERENCES_OPEN_EVENT,
+        openPreferences,
+      );
     };
   }, []);
 
@@ -137,7 +140,7 @@ export function CookieBanner() {
             aria-expanded={isPreferencesOpen}
             aria-label={
               isPreferencesOpen
-                ? t("save") + " " + t("preferences").toLowerCase()
+                ? `${t("save")} ${t("preferences").toLowerCase()}`
                 : t("preferences")
             }
             className="h-11 px-2 text-body-sm md:px-5 md:text-body-md"

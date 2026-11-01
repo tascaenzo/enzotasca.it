@@ -1,18 +1,19 @@
+import {
+  CheckboxField,
+  Container,
+  Eyebrow,
+  Heading,
+  Section,
+  SectionHeader,
+  TextField,
+} from "@enzotasca/ui";
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { ArticleCard } from "@/components/cards/article-card";
 import { ProjectCard } from "@/components/cards/project-card";
 import { SkillCard } from "@/components/cards/skill-card";
-import { Button } from "@/components/ui/button";
-import { CheckboxField } from "@/components/ui/checkbox-field";
-import { Container } from "@/components/ui/container";
-import { Section } from "@/components/ui/section";
-import { TextField } from "@/components/ui/text-field";
-import { Eyebrow, Heading } from "@/components/ui/typography";
-import { SectionHeader } from "@/components/ui/section-header";
-import { featuredArticles } from "@/mocks/articles";
-import { featuredProjects } from "@/mocks/projects";
-import { skills } from "@/mocks/skills";
+import { Button } from "@/components/navigation/button";
+import { getRepositories } from "@/lib/server/repositories";
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -34,6 +35,10 @@ const structuredData = {
 };
 
 export default async function Home() {
+  const repositories = getRepositories();
+  const skills = repositories.skills.list();
+  const featuredArticles = repositories.articles.listFeatured();
+  const featuredProjects = repositories.projects.listFeatured();
   const t = await getTranslations("home");
   const timeline = await getTranslations("timeline");
 
@@ -41,7 +46,10 @@ export default async function Home() {
     <main id="main-content" className="bg-ds-white">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD serialized as JSON with HTML delimiters escaped.
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
+        }}
       />
 
       <Section className="pt-20 md:pt-32">
@@ -180,7 +188,7 @@ export default async function Home() {
 
           <div className="grid gap-8 md:grid-cols-3">
             {skills.map((item) => (
-              <SkillCard key={item.title} {...item} />
+              <SkillCard key={item.slug} {...item} />
             ))}
           </div>
         </Container>

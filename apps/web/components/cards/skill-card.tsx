@@ -1,5 +1,4 @@
-import { Card } from "@/components/ui/card";
-import { TagList } from "@/components/ui/tag";
+import { Card, TagList } from "@enzotasca/ui";
 import type { Skill } from "@/types/content";
 
 type SkillCardProps = Skill;

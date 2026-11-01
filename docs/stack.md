@@ -9,18 +9,18 @@ Il sito raccoglie profilo professionale, progetti, articoli tecnici, video YouTu
 
 | Categoria | Tecnologia | Versione |
 | --- | --- | --- |
-| Framework | Next.js (App Router) | 16.2.6 |
-| UI | React | 19.2.6 |
-| Linguaggio | TypeScript | 6.0.3 |
-| Stili | Tailwind CSS v4 | 4.3.0 |
-| PostCSS | @tailwindcss/postcss | 4.3.0 |
-| Linter | ESLint 9 flat config + eslint-config-next | ^9.0.0 |
+| Framework | Next.js (App Router) | 16.4.3 |
+| UI | React | 19.3.1 |
+| Linguaggio | TypeScript | 7.0.2 |
+| Stili | Tailwind CSS v4 | 4.3.3 |
+| PostCSS | @tailwindcss/postcss | 4.3.3 |
+| Linter e formatter | Biome (regole React e Next.js) | 2.6.4 |
 | Package manager | npm workspaces (monorepo) | |
-| Node engine | >= 20.9.0 | |
+| Node engine | >= 22 | |
 
 ### Dipendenze runtime
 
-Solo 3: `next`, `react`, `react-dom`. Nessuna libreria UI esterna, nessun state management, nessun client HTTP.
+App web: `next`, `next-intl`, `react`, `react-dom`, `server-only` e i workspace `@enzotasca/database` e `@enzotasca/ui`. Il workspace database usa `drizzle-orm` e `better-sqlite3`. Nessuna libreria UI esterna, nessun state management, nessun client HTTP.
 
 ## Struttura del progetto
 
@@ -35,7 +35,7 @@ enzotasca-it/
 │       │   ├── newsletter/cancellazione/ # Disiscrizione newsletter
 │       │   ├── preferenze-cookie/# Gestione preferenze cookie
 │       │   ├── progetti/         # Archivio progetti
-│       │   ├── globals.css       # Tailwind v4 @theme + global styles
+│       │   ├── globals.css       # Import Tailwind/UI + stili globali dell'app
 │       │   ├── layout.tsx        # Root layout
 │       │   ├── page.tsx          # Homepage
 │       │   ├── error.tsx         # Error boundary
@@ -45,13 +45,14 @@ enzotasca-it/
 │       │   ├── cards/            # Card compositore (skill, project, article)
 │       │   ├── cookie/           # Cookie banner + form preferenze
 │       │   ├── site/             # Layout shell (header, footer, mobile menu)
-│       │   └── ui/               # Componenti atomici (button, card, tag, form, typography, section-header, page-header)
+│       │   └── navigation/       # Adattatori Button/TextLink per next-intl
 │       ├── lib/
-│       │   ├── cn.ts             # Utility classi condizionali
 │       │   └── cookies/consent.ts # Gestione consenso cookie (localStorage)
-│       ├── mocks/                # Dati mock (articles, projects, skills)
 │       ├── types/                # TypeScript types (Skill, Article, Project)
 │       └── public/images/        # Asset statici
+├── packages/
+│   ├── ui/                       # Design system React e Tailwind, senza Next.js
+│   └── database/                 # SQLite, schema Drizzle e repository
 └── docs/                         # Documentazione
 ```
 
@@ -67,15 +68,16 @@ Tutte le 9 route sono server component di default. Solo 3 componenti usano `"use
 
 ### Pattern componente
 
-1. **Componenti atomici** (`ui/`): primitivi generici e riusabili (Button, Card, Container, Tag, TextField...)
+1. **Componenti atomici** (`packages/ui/src/components/`): primitivi generici e riusabili (Button, Card, Container, Tag, TextField...)
 2. **Card** (`cards/`): composizione di atomi per domini specifici (SkillCard, ProjectCard, ArticleCard)
 3. **Layout** (`site/`): elementi di shell della pagina (header, footer, menu mobile)
 4. **Feature** (`cookie/`): componente specifico per funzionalita cross-page
 
 ### Data layer
 
-Attualmente tutto mockato in `mocks/`. Nessun database, CMS, API esterna o server action.
-I mock esportano array, funzioni di lookup (`getArticleBySlug`, `getProjectBySlug`) e varianti filtrate (`featuredArticles`, `featuredProjects`).
+Articoli, progetti e skill sono salvati in SQLite con Drizzle nel workspace `packages/database`. Le pagine accedono esclusivamente ai repository attraverso un modulo `server-only`. Nessuna pagina importa mock o dati del seed. Le fixture del seed sono isolate in `packages/database/scripts/seed` e usate anche dai test. La preview del design system legge dai repository. Il percorso SQLite arriva dalla variabile d'ambiente obbligatoria `SQLITE_PATH`.
+
+Schema, migrazioni, repository e comandi: vedi `docs/database.md`.
 
 ### Gestione stato
 
@@ -92,7 +94,7 @@ JSON-LD integrato nelle pagine:
 ## Design system
 
 Vedi `docs/design-system.md` per dettagli completi su token, componenti e pattern.
-Il tema e definito in `apps/web/app/globals.css` via `@theme` di Tailwind v4.
+Il tema e definito in `packages/ui/src/styles.css` via `@theme` di Tailwind v4 e importato dal CSS dell'app.
 Convenzione naming: tutti i token custom usano prefisso `ds-` (es. `ds-blue`, `ds-mint`, `rounded-ds-xl`).
 
 ## Accessibilita
@@ -108,15 +110,27 @@ Convenzione naming: tutti i token custom usano prefisso `ds-` (es. `ds-blue`, `d
 
 - **Server component first**: solo 3 file con `"use client"` su ~30 file sorgente
 - **Naming**: PascalCase per componenti, camelCase per utility, kebab-case per classi CSS
-- **Classi condizionali**: usare `cn()` in `lib/cn.ts` (wrapper minimal su `filter(Boolean).join(" ")`)
+- **Classi condizionali**: usare `cn()` esportata da `@enzotasca/ui` (wrapper minimal su `filter(Boolean).join(" ")`)
 - **Stili**: solo Tailwind utility classes, zero CSS modules, zero CSS-in-JS
 - **Form**: label con `htmlFor` + `id` generato via `useId()` di React
 - **Link esterni**: `rel="noreferrer"` + `target="_blank"` di default
 
+## Controlli e formattazione
+
+La configurazione condivisa e in `biome.json`, con regole raccomandate React e Next.js e supporto alla sintassi Tailwind CSS v4. File generati, cache e lockfile sono esclusi.
+
+Dalla root del monorepo:
+
+- `npm run lint`: verifica di lint, formattazione e ordine degli import con Biome.
+- `npm run lint:fix`: correzioni automatiche sicure, formattazione e organizzazione degli import.
+- `npm run format`: formattazione dei sorgenti.
+- `npm run format:check`: verifica della formattazione senza modifiche.
+- `npm run typecheck`: controllo dei tipi con TypeScript 7.
+- `npm run build`: build di produzione Next.js.
+
 ## Testing
 
-Attualmente assente. Nessun framework di test installato, nessun file `*.test.*` o `*.spec.*`.
-Da implementare: Vitest per unit test, Playwright per e2e.
+Test di integrazione dei repository SQLite con il test runner Node.js: `npm run test:db`. Restano da introdurre test end-to-end per l'app web.
 
 ## CI / CD
 

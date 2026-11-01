@@ -1,11 +1,9 @@
+import { Container, Eyebrow, Section } from "@enzotasca/ui";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { ProjectCard } from "@/components/cards/project-card";
-import { Button } from "@/components/ui/button";
-import { Container } from "@/components/ui/container";
-import { Section } from "@/components/ui/section";
-import { Eyebrow } from "@/components/ui/typography";
-import { projects } from "@/mocks/projects";
+import { Button } from "@/components/navigation/button";
+import { getRepositories } from "@/lib/server/repositories";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("projects");
@@ -19,6 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ProjectsPage() {
+  const projects = getRepositories().projects.list();
   const t = await getTranslations("projects");
 
   return (

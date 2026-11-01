@@ -1,8 +1,8 @@
+import { PageHeader } from "@enzotasca/ui";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { CookiePreferencesForm } from "@/components/cookie/cookie-preferences-form";
-import { Button } from "@/components/ui/button";
-import { PageHeader } from "@/components/ui/page-header";
+import { Button } from "@/components/navigation/button";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("cookie");
@@ -21,7 +21,10 @@ export default async function CookiePreferencesPage() {
 
   return (
     <main id="main-content" className="bg-ds-white">
-      <PageHeader eyebrow={t("preferencesPageTitle")} title={t("preferencesPageTitle") + "."}>
+      <PageHeader
+        eyebrow={t("preferencesPageTitle")}
+        title={`${t("preferencesPageTitle")}.`}
+      >
         <p className="mt-6 text-body-lg text-ds-warm-muted">
           {t("preferencesPageDescription")}
         </p>

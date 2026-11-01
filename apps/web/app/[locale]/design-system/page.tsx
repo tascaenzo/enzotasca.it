@@ -1,20 +1,22 @@
+import {
+  Card,
+  CheckboxField,
+  Container,
+  Eyebrow,
+  Heading,
+  PageHeader,
+  Section,
+  Tag,
+  TagList,
+  TextField,
+} from "@enzotasca/ui";
 import { notFound } from "next/navigation";
 import { ArticleCard } from "@/components/cards/article-card";
 import { ProjectCard } from "@/components/cards/project-card";
 import { SkillCard } from "@/components/cards/skill-card";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { CheckboxField } from "@/components/ui/checkbox-field";
-import { Container } from "@/components/ui/container";
-import { PageHeader } from "@/components/ui/page-header";
-import { Section } from "@/components/ui/section";
-import { Tag, TagList } from "@/components/ui/tag";
-import { TextField } from "@/components/ui/text-field";
-import { TextLink } from "@/components/ui/text-link";
-import { Eyebrow, Heading } from "@/components/ui/typography";
-import { articles } from "@/mocks/articles";
-import { featuredProjects } from "@/mocks/projects";
-import { skills } from "@/mocks/skills";
+import { Button } from "@/components/navigation/button";
+import { TextLink } from "@/components/navigation/text-link";
+import { getRepositories } from "@/lib/server/repositories";
 
 const colors = [
   ["Ink", "bg-ds-ink", "#000000"],
@@ -38,9 +40,6 @@ const colors = [
   ["Lavender", "bg-ds-lavender", "#DCE1FF"],
 ];
 
-const skillExample = skills[0];
-const articleExample = articles[0];
-
 export const metadata = {
   title: "Design System",
   description: "Pagina di test per palette e componenti del sito Enzo Tasca.",
@@ -55,12 +54,20 @@ export default function DesignSystemPage() {
     notFound();
   }
 
+  const repositories = getRepositories();
+  const skillExample = repositories.skills.list()[0];
+  const articleExample = repositories.articles.listFeatured(1)[0];
+  const projectExample = repositories.projects.listFeatured(1)[0];
+
   return (
     <main id="main-content" className="bg-ds-white">
-      <PageHeader eyebrow="Design system" title="Componenti, palette e stati interattivi.">
+      <PageHeader
+        eyebrow="Design system"
+        title="Componenti, palette e stati interattivi."
+      >
         <p className="mt-6 max-w-2xl text-body-lg text-ds-warm-muted">
-          Pagina di test interna per controllare coerenza visiva,
-          accessibilita, hover e varianti dei componenti.
+          Pagina di test interna per controllare coerenza visiva, accessibilita,
+          hover e varianti dei componenti.
         </p>
       </PageHeader>
 
@@ -240,8 +247,16 @@ export default function DesignSystemPage() {
                 Wrapper riusabile per contenuti semplici o composizioni custom.
               </p>
             </Card>
-            <SkillCard {...skillExample} />
-            <ArticleCard {...articleExample} />
+            {skillExample ? (
+              <SkillCard {...skillExample} />
+            ) : (
+              <p>Nessuna competenza disponibile.</p>
+            )}
+            {articleExample ? (
+              <ArticleCard {...articleExample} />
+            ) : (
+              <p>Nessun articolo disponibile.</p>
+            )}
           </div>
         </Container>
       </Section>
@@ -252,7 +267,11 @@ export default function DesignSystemPage() {
             Project card
           </Heading>
           <div className="max-w-2xl">
-            <ProjectCard index={0} project={featuredProjects[0]} />
+            {projectExample ? (
+              <ProjectCard index={0} project={projectExample} />
+            ) : (
+              <p>Nessun progetto disponibile.</p>
+            )}
           </div>
         </Container>
       </Section>

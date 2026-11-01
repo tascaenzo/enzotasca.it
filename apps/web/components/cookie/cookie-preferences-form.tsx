@@ -1,9 +1,9 @@
 "use client";
 
-import { useMemo, useState, useSyncExternalStore } from "react";
+import { CheckboxField } from "@enzotasca/ui";
 import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
-import { CheckboxField } from "@/components/ui/checkbox-field";
+import { useMemo, useState, useSyncExternalStore } from "react";
+import { Button } from "@/components/navigation/button";
 import {
   type CookieConsent,
   clearCookieConsent,
@@ -96,9 +96,7 @@ export function CookiePreferencesForm() {
           description={t("analyticsDescription")}
           label={t("analytics")}
           name="analyticsCookies"
-          onChange={(event) =>
-            updateDraft({ analytics: event.target.checked })
-          }
+          onChange={(event) => updateDraft({ analytics: event.target.checked })}
         />
 
         <CheckboxField
@@ -106,16 +104,11 @@ export function CookiePreferencesForm() {
           description={t("marketingDescription")}
           label={t("marketing")}
           name="marketingCookies"
-          onChange={(event) =>
-            updateDraft({ marketing: event.target.checked })
-          }
+          onChange={(event) => updateDraft({ marketing: event.target.checked })}
         />
       </div>
 
-      <p
-        aria-live="polite"
-        className="mt-6 text-body-sm text-ds-warm-muted"
-      >
+      <p aria-live="polite" className="mt-6 text-body-sm text-ds-warm-muted">
         {currentStatus}
       </p>
 

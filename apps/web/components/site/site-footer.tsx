@@ -1,9 +1,9 @@
 "use client";
 
+import { Container } from "@enzotasca/ui";
 import { useTranslations } from "next-intl";
+import { TextLink } from "@/components/navigation/text-link";
 import { LocaleSwitcher } from "@/components/site/locale-switcher";
-import { Container } from "@/components/ui/container";
-import { TextLink } from "@/components/ui/text-link";
 import { Link } from "@/i18n/routing";
 import { openCookiePreferences } from "@/lib/cookies/consent";
 

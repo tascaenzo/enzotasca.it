@@ -1,7 +1,6 @@
+import { Container, Section } from "@enzotasca/ui";
 import { getTranslations } from "next-intl/server";
-import { Button } from "@/components/ui/button";
-import { Container } from "@/components/ui/container";
-import { Section } from "@/components/ui/section";
+import { Button } from "@/components/navigation/button";
 
 export default async function NotFound() {
   const t = await getTranslations("errors");

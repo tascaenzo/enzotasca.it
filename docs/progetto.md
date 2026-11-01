@@ -40,7 +40,7 @@ L'idea e mostrare non solo *cosa* so fare, ma *come* ci arrivo — errori compre
 
 ## Stato attuale
 
-Il sito e in costruzione. I contenuti sono attualmente **mockati** (dati finti inseriti direttamente nel codice). La struttura, il design system e i componenti sono pronti per ricevere dati reali da un CMS, API o database.
+Il sito e in costruzione. Articoli, progetti e competenze sono persistiti in **SQLite con Drizzle**, in un workspace separato con repository. Il seed iniziale conserva i precedenti contenuti dimostrativi. I mock applicativi sono stati rimossi dopo averne verificato la presenza nel seed e nel database; manca ancora un pannello editoriale. Vedi `docs/database.md`.
 
 Funziona gia:
 - Navigazione completa tra tutte le pagine
@@ -51,15 +51,15 @@ Funziona gia:
 - Pagine 404, errore e loading
 
 Manca:
-- Collegamento a dati reali (CMS / API / database)
+- Inserimento dei contenuti editoriali definitivi e pannello di gestione
 - Invio effettivo della newsletter
 - Analytics e tracking (consenso pronto, codice no)
-- Test automatici
+- Test end-to-end dell'app web (i repository database hanno test di integrazione)
 - CI/CD
 
 ## Tecnologia in breve
 
-Framework **Next.js** con **React 19** e **TypeScript 6**. Stili con **Tailwind CSS v4** e design system completamente custom (zero librerie UI esterne). Monorepo con npm workspaces.
+Framework **Next.js** con **React 19** e **TypeScript 7**. Stili con **Tailwind CSS v4** e design system completamente custom (zero librerie UI esterne). Monorepo con npm workspaces.
 
 Per i dettagli tecnici completi: `docs/stack.md`
 Per il design system: `docs/design-system.md`

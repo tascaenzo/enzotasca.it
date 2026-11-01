@@ -82,8 +82,7 @@
   "articles": {
     "asideTitle": "Article",
     "asideDescription": "Ici tu pourras ajouter un sommaire, un lien vers la vidéo YouTube associée, le repository ou les ressources du projet.",
-    "backLink": "Retour aux articles",
-    "mockNote": "Cette page utilise encore du contenu factice : la structure est déjà prête à recevoir du texte complet, des sections, des images et des données réelles depuis une API ou un CMS."
+    "backLink": "Retour aux articles"
   },
   "cookie": {
     "bannerTitle": "Préférences cookies",

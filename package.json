@@ -3,14 +3,25 @@
   "private": true,
   "version": "0.1.0",
   "workspaces": [
-    "apps/*"
+    "apps/*",
+    "packages/*"
   ],
   "scripts": {
     "dev": "npm run dev --workspace web",
     "build": "npm run build --workspace web",
-    "lint": "npm run lint --workspace web"
+    "lint": "npm run lint --workspaces --if-present",
+    "lint:fix": "npm run lint:fix --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "format": "npm run format --workspaces --if-present",
+    "format:check": "npm run format:check --workspaces --if-present",
+    "db:generate": "npm run db:generate --workspace @enzotasca/database",
+    "db:migrate": "npm run db:migrate --workspace @enzotasca/database",
+    "db:seed": "npm run db:seed --workspace @enzotasca/database",
+    "db:studio": "npm run db:studio --workspace @enzotasca/database",
+    "test:db": "npm test --workspace @enzotasca/database",
+    "test:ui": "npm test --workspace @enzotasca/ui"
   },
   "engines": {
-    "node": ">=20.9.0"
+    "node": ">=22"
   }
 }

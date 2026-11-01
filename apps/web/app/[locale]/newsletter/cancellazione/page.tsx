@@ -1,7 +1,7 @@
+import { PageHeader } from "@enzotasca/ui";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { Button } from "@/components/ui/button";
-import { PageHeader } from "@/components/ui/page-header";
+import { Button } from "@/components/navigation/button";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("nav");
@@ -19,7 +19,10 @@ export default async function NewsletterUnsubscribePage() {
 
   return (
     <main id="main-content" className="bg-ds-white">
-      <PageHeader eyebrow={t("cancelNewsletter")} title={t("cancelNewsletter") + "."}>
+      <PageHeader
+        eyebrow={t("cancelNewsletter")}
+        title={`${t("cancelNewsletter")}.`}
+      >
         <Button className="mt-10" href="/" variant="outline">
           {t("backHome")}
         </Button>

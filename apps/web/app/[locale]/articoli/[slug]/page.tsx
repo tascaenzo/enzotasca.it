@@ -1,12 +1,10 @@
-import Image from "next/image";
+import { Container, Eyebrow, Section } from "@enzotasca/ui";
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import Image from "next/image";
 import { notFound } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Container } from "@/components/ui/container";
-import { Section } from "@/components/ui/section";
-import { Eyebrow } from "@/components/ui/typography";
-import { articles, getArticleBySlug } from "@/mocks/articles";
+import { getTranslations } from "next-intl/server";
+import { Button } from "@/components/navigation/button";
+import { getRepositories } from "@/lib/server/repositories";
 
 type ArticlePageProps = {
   params: Promise<{
@@ -15,17 +13,11 @@ type ArticlePageProps = {
   }>;
 };
 
-export function generateStaticParams() {
-  return articles.map((article) => ({
-    slug: article.slug,
-  }));
-}
-
 export async function generateMetadata({
   params,
 }: ArticlePageProps): Promise<Metadata> {
   const { slug } = await params;
-  const article = getArticleBySlug(slug);
+  const article = getRepositories().articles.findBySlug(slug);
 
   if (!article) {
     return {};
@@ -48,7 +40,7 @@ export async function generateMetadata({
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
   const { slug } = await params;
-  const article = getArticleBySlug(slug);
+  const article = getRepositories().articles.findBySlug(slug);
   const t = await getTranslations("articles");
 
   if (!article) {
@@ -71,7 +63,10 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     <main id="main-content" className="bg-ds-white">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD serialized as JSON with HTML delimiters escaped.
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(articleJsonLd).replace(/</g, "\\u003c"),
+        }}
       />
 
       <Section className="pt-20 md:pt-32">
@@ -110,7 +105,6 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
             <div className="max-w-3xl space-y-6 text-body-lg text-ds-warm-muted">
               <p>{article.body}</p>
-              <p>{t("mockNote")}</p>
             </div>
           </article>
 
